@@ -1,6 +1,14 @@
-const _ = require('lodash')
+const { writeFile } = require("fs");
+const os = require("os");
+const sentence = require("./practice2");
 
-const items = [1, [2, [3, [4]]]]
-const newItems = _.flattenDeep(items)
-console.log(newItems);
-console.log('hello people')
+writeFile("./content/practice.txt", sentence, (err) => {
+  if (err) {
+  console.log(err);
+}
+writeFile("./content/practice.txt", os.userInfo().username, { flag: "a"}, (err) => {
+    if (err) {
+      console.log(err);
+    }
+  });
+});
