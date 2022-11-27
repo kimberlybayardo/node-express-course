@@ -48,32 +48,39 @@
 
       const fetchPeople = async () => {
         try {
+          //BECAUSE AXIOS HAS A GET REQUEST THAT MEANS WE WILL USE GET REQUEST IN THE FRONT END TO THE SAME SERVER: /API/PEOPLE *REMEMBER THAT THE PATHS MATCH OR YOULL GET AN ERROR
           const { data } = await axios.get('/api/people')
 
           const people = data.data.map((person) => {
             return `<h5>${person.name}</h5>`
           })
           result.innerHTML = people.join('')
+          // THIS SAYS THAT IF THERES AN ERROR WE CANT FETCH DATA USING INNTER HTML
         } catch (error) {
           result.innerHTML = `<div class="alert alert-danger">Can't Fetch Data</div>`
         }
       }
       fetchPeople()
-      // submit form
+      // using and submit form
       const btn = document.querySelector('.submit-btn')
       const input = document.querySelector('.form-input')
       const formAlert = document.querySelector('.form-alert')
+      
+      //user submitting the form
+      //using asyc because i can wait for a response; we are using pose because we are sending a post request
       btn.addEventListener('click', async (e) => {
         e.preventDefault()
         const nameValue = input.value
 
         try {
+          //
           const { data } = await axios.post('/api/people', { name: nameValue })
           const h5 = document.createElement('h5')
           h5.textContent = data.person
           result.appendChild(h5)
         } catch (error) {
           // console.log(error.response)
+          //if when we are trying to submit somethiing and there is a empty form then we will desplay the error message
           formAlert.textContent = error.response.data.msg
         }
         input.value = ''
